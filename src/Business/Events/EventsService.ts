@@ -8,7 +8,7 @@ export class EventsService {
 
   async create(createDto: CreateDto) {
     const { databaseService } = this;
-    const event = databaseService.events().create(createDto);
-    await databaseService.events().save(event);
+    const event = databaseService.events.create(createDto);
+    await databaseService.events.save(event);
   }
 }

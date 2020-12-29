@@ -1,27 +1,44 @@
-import { Column, PrimaryGeneratedColumn } from "typeorm";
-import { Coordinates } from "./Coordinates";
-import { Hour } from "./Hour";
-import { WeekDays } from "./WeekDays";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Coordinates } from "../Models/Coordinates";
+import { WeekDays } from "../Enums/WeekDays";
+import { Event } from "./Event";
 
+@Entity()
 export class Place {
-    @PrimaryGeneratedColumn()
-    id?: number;
+  @PrimaryGeneratedColumn()
+  id?: number;
 
-    @Column()
-    name: string;
+  @Column("varchar")
+  name: string;
 
-    @Column()
-    location: Coordinates;
+  @Column("varchar", {
+    transformer: {
+      from: (value: string) => {
+        const arr = value.split(",");
+        return new Coordinates(parseInt(arr[0]), parseInt(arr[1]));
+      },
+      to: (value: Coordinates) => `${value.latitude},${value.longitude}`,
+    },
+  })
+  location: Coordinates;
 
-    @Column()
-    price: number;
+  @Column("int")
+  price: number;
 
-    @Column()
-    opensAt: Hour;
+  @Column("datetime")
+  opensAt: Date;
 
-    @Column()
-    closesAt: Hour;
+  @Column("datetime")
+  closesAt: Date;
 
-    @Column("simple-array")
-    availableDays: WeekDays[];
+  @Column("varchar", {
+    transformer: {
+      from: (value: string) => value.split(","),
+      to: (value: WeekDays[]) => value.join(","),
+    },
+  })
+  availableDays: WeekDays[];
+
+  @OneToMany(() => Event, (e) => e.place)
+  events: Event[];
 }

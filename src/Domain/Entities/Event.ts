@@ -1,5 +1,15 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 import { Place } from "./Place";
+import { Service } from "./Service";
+import { User } from "./User";
 
 @Entity()
 export class Event {
@@ -9,24 +19,44 @@ export class Event {
   @Column("varchar")
   name: string;
 
-  @Column("simple-array")
-  tags: string[];
+  @Column("varchar", {
+    transformer: {
+      from: (value: string) => value?.split(","),
+      to: (value: string[]) => value?.join(","),
+    },
+    nullable: true,
+  })
+  tags?: string[];
 
-  @Column()
-  limit: number;
+  @Column("int")
+  attendanceLimit: number;
 
-  @Column("boolean")
-  ticket: boolean;
-
-  @Column("varchar")
-  location: Place;
+  @Column("tinyint")
+  needsTicket: boolean;
 
   @Column("varchar", { nullable: true })
   description: string;
 
   @CreateDateColumn()
-  date: Date;
+  createdAt: Date;
 
-  @Column()
+  @Column("datetime")
+  happensAt: Date;
+
+  @Column("float", { nullable: true })
   rating: number;
+
+  @ManyToOne(() => User)
+  planner: User;
+
+  @ManyToMany(() => User, (u) => u.goingEvents, { cascade: true })
+  @JoinTable()
+  goers: User[];
+
+  @ManyToMany(() => Service, (s) => s.servedEvents, { cascade: true })
+  @JoinTable()
+  services: Service[];
+
+  @ManyToOne(() => Place)
+  place: Place;
 }

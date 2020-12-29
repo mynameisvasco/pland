@@ -1,6 +1,11 @@
 import { Injectable } from "nelso/build/decorators/DiDecorators";
 import { Connection, createConnection } from "typeorm";
 import { Event } from "../../Domain/Entities/Event";
+import { Place } from "../../Domain/Entities/Place";
+import { Service } from "../../Domain/Entities/Service";
+import { ServiceSupplier } from "../../Domain/Entities/ServiceSupplier";
+import { Ticket } from "../../Domain/Entities/Ticket";
+import { User } from "../../Domain/Entities/User";
 
 @Injectable()
 export class DatabaseService {
@@ -10,16 +15,32 @@ export class DatabaseService {
     this.db = await createConnection({
       type: "sqlite",
       database: "db.sql",
-      entities: [Event],
+      entities: [Event, Place, Service, ServiceSupplier, Ticket, User],
       synchronize: true,
     });
   }
 
-  events() {
+  get events() {
     return this.db.getRepository(Event);
   }
 
-  users() {}
+  get users() {
+    return this.db.getRepository(User);
+  }
 
-  places() {}
+  get places() {
+    return this.db.getRepository(Place);
+  }
+
+  get services() {
+    return this.db.getRepository(Service);
+  }
+
+  get serviceSuppliers() {
+    return this.db.getRepository(ServiceSupplier);
+  }
+
+  get tickets() {
+    return this.db.getRepository(Ticket);
+  }
 }
