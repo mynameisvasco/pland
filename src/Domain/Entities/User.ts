@@ -2,7 +2,6 @@ import {
   Column,
   Entity,
   ManyToMany,
-  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
@@ -22,22 +21,22 @@ export class User {
   @Column("int")
   age: number;
 
-  @Column("varchar")
+  @Column("varchar", { unique: true })
   email: string;
 
-  @Column("varchar")
+  @Column("varchar", { select: false })
   password: string;
 
   @Column("varchar", { nullable: true })
-  phone: number;
+  phone: string;
 
   @Column("float", { default: 0 })
   rating: number;
 
-  @Column("int")
+  @Column("int", { default: AccountStatus.ACTIVE })
   status: AccountStatus;
 
-  @Column("int")
+  @Column("int", { default: AccountTypes.CLIENT })
   type: AccountTypes;
 
   @OneToMany(() => Event, (e) => e.planner)
