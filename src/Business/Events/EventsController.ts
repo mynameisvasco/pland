@@ -12,6 +12,6 @@ export class EventsController {
   async create(req: Request, res: Response) {
     const dto = await req.body(CreateDto);
     await this.eventsService.create(dto);
-    res.sendJson({ message: "Event created with success" });
+    res.send({ message: "Event created with success" });
   }
 }

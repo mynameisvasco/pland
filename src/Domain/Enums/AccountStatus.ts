@@ -1,6 +1,6 @@
 export enum AccountStatus {
-    ACTIVE,
-    BANNED,
-    SUSPENDING,
-    PENDING
+  ACTIVE,
+  BANNED,
+  SUSPENDED,
+  PENDING,
 }
