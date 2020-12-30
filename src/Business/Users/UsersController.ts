@@ -1,11 +1,5 @@
 import { addDays } from "date-fns";
-import {
-  Controller,
-  Get,
-  Post,
-} from "nelso/build/decorators/RoutingDecorators";
-import { Request } from "nelso/build/Request";
-import { Response } from "nelso/build/Response";
+import { Controller, Get, Post, Request, Response } from "nelso/build";
 import { AuthMiddleware } from "../Common/Middleware/AuthMiddleware";
 import { LoginDto } from "./Dto/LoginDto";
 import { RegisterDto } from "./Dto/RegisterDto";

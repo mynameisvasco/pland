@@ -1,6 +1,5 @@
-import { Controller, Post } from "nelso/build/decorators/RoutingDecorators";
-import { Request } from "nelso/build/Request";
-import { Response } from "nelso/build/Response";
+import { Controller, Post, Request, Response } from "nelso/build";
+
 import { CreateDto } from "./dto/CreateDto";
 import { EventsService } from "./EventsService";
 

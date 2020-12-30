@@ -1,4 +1,4 @@
-import { Injectable } from "nelso/build/decorators/DiDecorators";
+import { Injectable } from "nelso/build";
 import { Connection, createConnection } from "typeorm";
 import { Event } from "../../Domain/Entities/Event";
 import { Place } from "../../Domain/Entities/Place";

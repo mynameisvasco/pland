@@ -1,10 +1,9 @@
-import { Injectable } from "nelso/build/decorators/DiDecorators";
 import { DatabaseService } from "../../Infrastructure/Database/DatabaseService";
 import { LoginDto } from "./Dto/LoginDto";
 import { RegisterDto } from "./Dto/RegisterDto";
-import { HttpException } from "nelso/build/HttpException";
 import { JwtAuthService } from "../../Infrastructure/Auth/JwtAuthService";
 import { AuthedUser } from "../../Domain/Models/AuthedUser";
+import { Injectable, HttpException } from "nelso/build";
 
 @Injectable()
 export class UsersService {

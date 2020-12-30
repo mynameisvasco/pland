@@ -1,6 +1,4 @@
-import { Injectable } from "nelso/build/decorators/DiDecorators";
-import { Di, Types } from "nelso/build/Di";
-import { Provider } from "nelso/build/Provider";
+import { Injectable, Provider, Di, Types } from "nelso/build";
 import { UsersController } from "./UsersController";
 import { UsersService } from "./UsersService";
 
