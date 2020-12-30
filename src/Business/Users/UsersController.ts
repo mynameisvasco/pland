@@ -13,7 +13,7 @@ export class UsersController {
   async login(req: Request, res: Response) {
     const dto = await req.body(LoginDto);
     const token = await this.usersService.login(dto);
-    res.send({ accessToken: token, expiresAt: addDays(new Date(), 15) });
+    res.send({ accessToken: token, expiresAt: addDays(new Date(), 1) });
   }
 
   @Post("register")

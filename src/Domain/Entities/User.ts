@@ -24,7 +24,7 @@ export class User {
   @Column("varchar", { unique: true })
   email: string;
 
-  @Column("varchar", { select: false })
+  @Column("varchar")
   password: string;
 
   @Column("varchar", { nullable: true })

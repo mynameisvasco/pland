@@ -1,5 +1,4 @@
 import { Controller, Post, Request, Response } from "nelso/build";
-
 import { CreateDto } from "./dto/CreateDto";
 import { EventsService } from "./EventsService";
 
