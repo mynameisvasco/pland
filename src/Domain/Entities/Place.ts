@@ -15,7 +15,7 @@ export class Place {
     transformer: {
       from: (value: string) => {
         const arr = value.split(",");
-        return new Coordinates(parseInt(arr[0]), parseInt(arr[1]));
+        return new Coordinates(parseFloat(arr[0]), parseFloat(arr[1]));
       },
       to: (value: Coordinates) => `${value.latitude},${value.longitude}`,
     },
