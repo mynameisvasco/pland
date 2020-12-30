@@ -1,5 +1,4 @@
-import { Provider } from "nelso/build/Provider";
-import { Di, Types } from "nelso/build/Di";
+import { Di, Provider, Types } from "nelso/build";
 import { EventsController } from "./EventsController";
 import { Injectable } from "nelso/build/decorators/DiDecorators";
 import { EventsService } from "./EventsService";

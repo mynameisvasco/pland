@@ -1,13 +1,16 @@
 import "reflect-metadata";
-import { AppFactory } from "nelso/build/AppFactory";
-import { Di } from "nelso/build/Di";
 import { EventsProvider } from "./Business/Events/EventsProvider";
-import { Provider } from "nelso/build/Provider";
 import { DatabaseProvider } from "./Infrastructure/Database/DatabaseProvider";
 import { UsersProvider } from "./Business/Users/UsersProvider";
 import { AuthProvider } from "./Infrastructure/Auth/AuthProvider";
 import { AuthMiddleware } from "./Business/Common/Middleware/AuthMiddleware";
-import { Middleware } from "nelso/build/Middleware";
+import {
+  AppFactory,
+  Di,
+  Provider,
+  Middleware,
+  RequestHandler,
+} from "nelso/build";
 
 const app = AppFactory.build();
 

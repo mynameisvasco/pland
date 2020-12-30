@@ -1,4 +1,4 @@
-import { Injectable } from "nelso/build/decorators/DiDecorators";
+import { Injectable } from "nelso/build";
 import { DatabaseService } from "../../Infrastructure/Database/DatabaseService";
 import { CreateDto } from "./dto/CreateDto";
 

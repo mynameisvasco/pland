@@ -1,8 +1,10 @@
-import { Injectable } from "nelso/build/decorators/DiDecorators";
-import { HttpException } from "nelso/build/HttpException";
-import { Middleware } from "nelso/build/Middleware";
-import { Request } from "nelso/build/Request";
-import { Response } from "nelso/build/Response";
+import {
+  HttpException,
+  Injectable,
+  Middleware,
+  Request,
+  Response,
+} from "nelso/build";
 import { AuthedUser } from "../../../Domain/Models/AuthedUser";
 import { JwtAuthService } from "../../../Infrastructure/Auth/JwtAuthService";
 
@@ -23,7 +25,7 @@ export class AuthMiddleware extends Middleware {
     if (!req.headers.authorization) {
       throw new HttpException("Unauthorized.", 401);
     } else {
-      const token = req.headers.authorization.substr(7);
+      const token = (req.headers.authorization as string).substr(7);
       req.user = authService.verifyTokenOrFail(token);
     }
     next();

@@ -1,8 +1,7 @@
-import { Injectable } from "nelso/build/decorators/DiDecorators";
 import * as Jwt from "jsonwebtoken";
 import * as Crypto from "crypto";
 import { AuthedUser } from "../../Domain/Models/AuthedUser";
-import { Config } from "nelso/build/Config";
+import { Injectable, Config } from "nelso/build";
 
 @Injectable()
 export class JwtAuthService {
