@@ -8,12 +8,14 @@ import { SearchAddressQuery } from "./Queries/SearchAddressQuery";
 export class PlacesController {
   constructor(private placesService: PlacesService) {}
 
+  //Pq é que nao é um get?
   @Post("findByLocation")
   async findByLocation(req: Request, res: Response) {
     const dto = await req.body(FindByLocationDto);
     res.send(await this.placesService.findByLocation(dto));
   }
 
+  //pq é que é uma querie?
   @Get("findByAddress")
   async findByAddress(req: Request, res: Response) {
     const dto = await req.queries(FindByAddressDto);

@@ -21,7 +21,8 @@ async function test() {
   const event = new Event();
   event.attendanceLimit = 10;
   event.name = "Churrascada no Deti";
-  event.happensAt = new Date();
+  event.startsAt = new Date();
+  event.duration = 5;
   event.needsTicket = true;
   const place = new Place();
   place.name = "Deti";
