@@ -4,7 +4,8 @@ import {
   IsOptional,
   IsNumber,
   IsString,
-  IsArray
+  IsArray,
+  Min
 } from "class-validator";
 
 export class CreateDto {
@@ -25,6 +26,7 @@ export class CreateDto {
   startsAt: string;
 
   @IsNumber()
+  @Min(1)
   duration: number;
 
   @IsOptional()

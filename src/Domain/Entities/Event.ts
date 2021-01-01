@@ -46,8 +46,6 @@ export class Event {
   startsAt: Date;
 
   @Column("int")
-  @Min(1)
-  @Max(24)
   duration: number;
 
   @Column("float", { nullable: true })

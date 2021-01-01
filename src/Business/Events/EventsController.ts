@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Request, Response } from "nelso/build";
+import { Controller, Get, HttpException, Post, Request, Response } from "nelso/build";
 import { CreateDto } from "./Dto/CreateDto";
 import { FindByIdQuery } from "./Queries/FindByIdQuery";
 import { EventsService } from "./EventsService";
 import { FindByTagsDto } from "./Dto/FindByTagsDto";
+import { ParticipateDto } from "./Dto/ParticipateDto";
 import { AuthMiddleware } from "../Common/Middleware/AuthMiddleware";
 
 @Controller("events")
@@ -35,10 +36,10 @@ export class EventsController {
     res.send(await this.eventsService.findByTags(dto));
   }
 
-  // @Post("participate")
-  // async participate(req: Request, res: Response) {
-
-  // }
-
-  //rating, going, editar/apagar
+  @Post("participate", [AuthMiddleware])
+  async participate(req: Request, res: Response) {
+    const dto = await req.body(ParticipateDto);
+    await this.eventsService.participate(dto, req.user);
+    res.send({ message: "User registered in event" });
+  }
 }
