@@ -20,7 +20,7 @@ export class AuthMiddleware extends Middleware {
     super();
   }
 
-  handle(req: Request, res: Response, next: Function) {
+  async handle(req: Request, res: Response, next: Function) {
     const { authService } = this;
     if (!req.headers.authorization) {
       throw new HttpException("Unauthorized.", 401);
@@ -28,6 +28,6 @@ export class AuthMiddleware extends Middleware {
       const token = (req.headers.authorization as string).substr(7);
       req.user = authService.verifyTokenOrFail(token);
     }
-    next();
+    await next();
   }
 }

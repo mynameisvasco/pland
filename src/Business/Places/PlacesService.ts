@@ -25,6 +25,10 @@ export class PlacesService {
     await databaseService.places.save(places);
   }
 
+  async findById(id: number) {
+    return await this.databaseService.events.findOne(id);
+  }
+
   async findByLocation(dto: FindByLocationDto) {
     const { databaseService, openRouteService } = this;
     const places = await databaseService.places.find();

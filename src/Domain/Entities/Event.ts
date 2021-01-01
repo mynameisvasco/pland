@@ -1,3 +1,4 @@
+import { Max, Min } from "class-validator";
 import {
   Column,
   CreateDateColumn,
@@ -20,13 +21,9 @@ export class Event {
   name: string;
 
   @Column("varchar", {
-    transformer: {
-      from: (value: string) => value?.split(","),
-      to: (value: string[]) => value?.join(","),
-    },
     nullable: true,
   })
-  tags?: string[];
+  _tags?: string;
 
   @Column("int")
   attendanceLimit: number;
@@ -35,16 +32,27 @@ export class Event {
   needsTicket: boolean;
 
   @Column("varchar", { nullable: true })
-  description: string;
+  description?: string;
 
   @CreateDateColumn()
   createdAt: Date;
 
-  @Column("datetime")
-  happensAt: Date;
+  @Column("datetime", {
+    transformer: {
+      from: (value: Date) => value,
+      to: (value: string) => new Date(value),
+    },
+  })
+  startsAt: Date;
+
+  @Column("int")
+  duration: number;
 
   @Column("float", { nullable: true })
-  rating: number;
+  rating?: number;
+
+  @Column("int", { nullable: true })
+  raters?: number;
 
   @ManyToOne(() => User)
   planner: User;
@@ -59,4 +67,8 @@ export class Event {
 
   @ManyToOne(() => Place)
   place: Place;
+
+  get tags() {
+    return this._tags.split(",");
+  }
 }
