@@ -43,7 +43,7 @@ export class Place {
 
   @Column("varchar", {
     transformer: {
-      from: (value: string) => value.split(","),
+      from: (value: string) => value.split(",").map((v) => parseInt(v)),
       to: (value: WeekDays[]) => value.join(","),
     },
   })

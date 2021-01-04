@@ -1,4 +1,4 @@
-import { Controller, Get, HttpException, Post, Request, Response } from "nelso/build";
+import { Controller, Get, Post, Request, Response } from "nelso/build";
 import { CreateDto } from "./Dto/CreateDto";
 import { FindByIdQuery } from "./Queries/FindByIdQuery";
 import { EventsService } from "./EventsService";
@@ -8,9 +8,8 @@ import { AuthMiddleware } from "../Common/Middleware/AuthMiddleware";
 
 @Controller("events")
 export class EventsController {
-  constructor(private eventsService: EventsService) { }
+  constructor(private eventsService: EventsService) {}
 
-  //Verificação da sobreposição de eventos?
   @Post("create", [AuthMiddleware])
   async create(req: Request, res: Response) {
     const dto = await req.body(CreateDto);
@@ -21,13 +20,7 @@ export class EventsController {
   @Get("findById")
   async findById(req: Request, res: Response) {
     const query = await req.queries(FindByIdQuery);
-    res.send(await this.eventsService.findById(query));
-  }
-
-  @Get("findByPlace")
-  async findByPlace(req: Request, res: Response) {
-    const dto = await req.queries(FindByIdQuery);
-    res.send(await this.eventsService.findByPlace(dto));
+    res.send(await this.eventsService.findById(parseInt(query.id)));
   }
 
   @Post("findByTags")
