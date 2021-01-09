@@ -1,6 +1,6 @@
 import { IsNotEmpty } from "class-validator";
 
-export class FindByAddressDto {
+export class FindByAddressQuery {
   @IsNotEmpty()
   address: string;
 }

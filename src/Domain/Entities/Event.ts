@@ -1,4 +1,5 @@
 import { Max, Min } from "class-validator";
+import { addMinutes } from "date-fns";
 import {
   Column,
   CreateDateColumn,
@@ -70,5 +71,13 @@ export class Event {
 
   get tags() {
     return this._tags.split(",");
+  }
+
+  get endsAt() {
+    return addMinutes(new Date(this.startsAt), this.duration);
+  }
+
+  isFull() {
+    return this.goers.length >= this.attendanceLimit;
   }
 }

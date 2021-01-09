@@ -2,9 +2,10 @@ import { Injectable } from "nelso/build";
 import { Coordinates } from "../../Domain/Models/Coordinates";
 import { DatabaseService } from "../../Infrastructure/Database/DatabaseService";
 import { OpenRouteService } from "../../Infrastructure/Location/OpenRouteService";
-import { FindByAddressDto } from "./Dto/FindByAddressDto";
 import { FindByLocationDto } from "./Dto/FindByLocationDto";
-import { SearchAddressQuery } from "./Queries/SearchAddressQuery";
+import { CreateDto } from "./Dto/CreateDto";
+import { Place } from "../../Domain/Entities/Place";
+import { areIntervalsOverlapping } from "date-fns";
 
 @Injectable()
 export class PlacesService {
@@ -13,13 +14,20 @@ export class PlacesService {
     private openRouteService: OpenRouteService
   ) {}
 
-  async findById(id: number) {
-    return await this.databaseService.events.findOne(id);
+  async create(createDto: CreateDto) {
+    const { databaseService } = this;
+    const places = databaseService.places.create(createDto);
+    await databaseService.places.save(places);
   }
 
-  async findByLocation(dto: FindByLocationDto) {
+  async findById(id: number, relations: string[] = []) {
+    const { databaseService } = this;
+    return await databaseService.places.findOne(id, { relations });
+  }
+
+  async findByLocation(dto: FindByLocationDto, relations: string[] = []) {
     const { databaseService, openRouteService } = this;
-    const places = await databaseService.places.find();
+    const places = await databaseService.places.find({ relations });
     const userCoordinates = new Coordinates(dto.latitude, dto.longitude);
     return places.filter(
       (place) =>
@@ -28,12 +36,10 @@ export class PlacesService {
     );
   }
 
-  async findByAddress(dto: FindByAddressDto) {
+  async findByAddress(address: string, relations: string[] = []) {
     const { databaseService, openRouteService } = this;
-    const locations = await this.findLocationByAddress({
-      address: dto.address,
-    });
-    const places = await databaseService.places.find();
+    const locations = await this.findAddressLocation(address);
+    const places = await databaseService.places.find({ relations });
     return places.filter(
       (place) =>
         openRouteService.distanceInKm(
@@ -43,7 +49,33 @@ export class PlacesService {
     );
   }
 
-  async findLocationByAddress(query: SearchAddressQuery) {
-    return await this.openRouteService.searchAddress(query.address);
+  async findAddressLocation(address: string) {
+    return await this.openRouteService.searchAddress(address);
+  }
+
+  findLastEventOnPlace(place: Place) {
+    if (!place.events) return undefined;
+    return place.events[place.events.length - 1];
+  }
+
+  isPlaceAvailableAt(place: Place, startsAt: Date, endsAt: Date) {
+    if (
+      !place.availableDays.includes(startsAt.getDay()) ||
+      !place.availableDays.includes(endsAt.getDay())
+    ) {
+      return false;
+    }
+    if (
+      startsAt.getHours() <= place.opensAt.getHours() &&
+      endsAt.getHours() >= place.closesAt.getHours()
+    ) {
+      return false;
+    }
+    const lastEvent = this.findLastEventOnPlace(place);
+    if (!lastEvent) return true;
+    return !areIntervalsOverlapping(
+      { start: startsAt, end: endsAt },
+      { start: lastEvent.startsAt, end: lastEvent.endsAt }
+    );
   }
 }

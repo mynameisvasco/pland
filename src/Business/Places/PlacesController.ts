@@ -1,30 +1,45 @@
 import { Controller, Get, Post, Request, Response } from "nelso/build";
-import { FindByAddressDto } from "./Dto/FindByAddressDto";
+import { FindByAddressQuery } from "./Queries/FindByAddressQuery";
 import { FindByLocationDto } from "./Dto/FindByLocationDto";
+import { CreateDto } from "./Dto/CreateDto";
 import { PlacesService } from "./PlacesService";
-import { SearchAddressQuery } from "./Queries/SearchAddressQuery";
+import { FindAddressLocationQuery } from "./Queries/FindAddressLocationQuery";
+import { AuthMiddleware } from "../Common/Middleware/AuthMiddleware";
+import { FindByIdQuery } from "./Queries/FindByIdQuery";
 
 @Controller("places")
 export class PlacesController {
   constructor(private placesService: PlacesService) {}
 
-  //Pq é que nao é um get?
   @Post("findByLocation")
   async findByLocation(req: Request, res: Response) {
     const dto = await req.body(FindByLocationDto);
     res.send(await this.placesService.findByLocation(dto));
   }
 
-  //pq é que é uma querie?
   @Get("findByAddress")
   async findByAddress(req: Request, res: Response) {
-    const dto = await req.queries(FindByAddressDto);
-    res.send(await this.placesService.findByAddress(dto));
+    const query = await req.queries(FindByAddressQuery);
+    res.send(await this.placesService.findByAddress(query.address));
   }
 
   @Get("findLocationByAddress")
   async findLocationByAddress(req: Request, res: Response) {
-    const queries = await req.queries(SearchAddressQuery);
-    res.send(await this.placesService.findLocationByAddress(queries));
+    const query = await req.queries(FindAddressLocationQuery);
+    res.send(await this.placesService.findAddressLocation(query.address));
+  }
+
+  @Post("create", [AuthMiddleware])
+  async create(req: Request, res: Response) {
+    const dto = await req.body(CreateDto);
+    console.log(dto);
+    await this.placesService.create(dto);
+    res.send({ message: "Location created with success" });
+  }
+
+  @Get("findById")
+  async findById(req: Request, res: Response) {
+    const query = await req.queries(FindByIdQuery);
+    res.send(await this.placesService.findById(parseInt(query.id)));
   }
 }

@@ -10,7 +10,7 @@ export class UsersService {
   constructor(
     private authService: JwtAuthService,
     private dbService: DatabaseService
-  ) { }
+  ) {}
 
   async findByEmail(email: string, relations: string[] = []) {
     return await this.dbService.users.findOne({ where: { email }, relations });

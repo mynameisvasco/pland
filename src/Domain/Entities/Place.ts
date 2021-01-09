@@ -25,15 +25,25 @@ export class Place {
   @Column("int")
   price: number;
 
-  @Column("datetime")
+  @Column("datetime", {
+    transformer: {
+      from: (value: Date) => value,
+      to: (value: string) => new Date(value),
+    },
+  })
   opensAt: Date;
 
-  @Column("datetime")
+  @Column("datetime", {
+    transformer: {
+      from: (value: Date) => value,
+      to: (value: string) => new Date(value),
+    },
+  })
   closesAt: Date;
 
   @Column("varchar", {
     transformer: {
-      from: (value: string) => value.split(","),
+      from: (value: string) => value.split(",").map((v) => parseInt(v)),
       to: (value: WeekDays[]) => value.join(","),
     },
   })
