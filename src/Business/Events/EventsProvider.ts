@@ -1,6 +1,6 @@
-import { Di, Provider, Types } from "nelso/build";
+import { Di, Provider, Types } from "kioto/build";
 import { EventsController } from "./EventsController";
-import { Injectable } from "nelso/build/decorators/DiDecorators";
+import { Injectable } from "kioto/build/decorators/DiDecorators";
 import { EventsService } from "./EventsService";
 
 @Injectable()

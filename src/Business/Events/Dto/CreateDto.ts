@@ -5,7 +5,8 @@ import {
   IsNumber,
   IsString,
   IsArray,
-  Min
+  Min,
+  IsDate,
 } from "class-validator";
 
 export class CreateDto {
@@ -22,8 +23,8 @@ export class CreateDto {
   @IsOptional()
   description?: string;
 
-  @IsString()
-  startsAt: string;
+  @IsDate()
+  startsAt: Date;
 
   @IsNumber()
   @Min(1)
@@ -33,6 +34,6 @@ export class CreateDto {
   @IsArray()
   tags?: string[];
 
-  @IsBoolean()
-  needsTicket: boolean;
+  @IsNumber()
+  needsTicket: number;
 }

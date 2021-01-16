@@ -3,7 +3,7 @@ import { LoginDto } from "./Dto/LoginDto";
 import { RegisterDto } from "./Dto/RegisterDto";
 import { JwtAuthService } from "../../Infrastructure/Auth/JwtAuthService";
 import { AuthedUser } from "../../Domain/Models/AuthedUser";
-import { Injectable, HttpException } from "nelso/build";
+import { Injectable, HttpException } from "kioto/build";
 
 @Injectable()
 export class UsersService {

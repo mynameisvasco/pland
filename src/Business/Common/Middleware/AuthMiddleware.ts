@@ -4,11 +4,11 @@ import {
   Middleware,
   Request,
   Response,
-} from "nelso/build";
+} from "kioto/build";
 import { AuthedUser } from "../../../Domain/Models/AuthedUser";
 import { JwtAuthService } from "../../../Infrastructure/Auth/JwtAuthService";
 
-declare module "nelso/build/Request" {
+declare module "kioto/build/Request" {
   interface Request {
     user: AuthedUser;
   }
@@ -24,9 +24,14 @@ export class AuthMiddleware extends Middleware {
     const { authService } = this;
     if (!req.headers.authorization) {
       throw new HttpException("Unauthorized.", 401);
-    } else {
-      const token = (req.headers.authorization as string).substr(7);
+    }
+    try {
+      const token = (req.headers.authorization as string)
+        .replace("Bearer", "")
+        .trim();
       req.user = authService.verifyTokenOrFail(token);
+    } catch (e) {
+      throw new HttpException("Unauthorized.", 401);
     }
     await next();
   }

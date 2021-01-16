@@ -1,4 +1,4 @@
-import { Di, Injectable, Provider } from "nelso/build";
+import { Di, Injectable, Provider } from "kioto/build";
 import { OpenRouteService } from "./OpenRouteService";
 
 @Injectable()

@@ -1,4 +1,4 @@
-import { Injectable } from "nelso/build";
+import { Injectable } from "kioto/build";
 import { Connection, createConnection } from "typeorm";
 import { Event } from "../../Domain/Entities/Event";
 import { Place } from "../../Domain/Entities/Place";

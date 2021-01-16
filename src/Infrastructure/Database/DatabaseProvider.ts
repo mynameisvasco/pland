@@ -1,4 +1,4 @@
-import { Injectable, Provider, Di } from "nelso/build";
+import { Injectable, Provider, Di } from "kioto/build";
 import { DatabaseService } from "./DatabaseService";
 
 @Injectable()

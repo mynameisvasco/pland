@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "tsc --project tsconfig.json && node build/src/main.js"
+    "start": "tsc --project tsconfig.json && node build/main.js"
   },
   "repository": {
     "type": "git",
@@ -21,7 +21,7 @@
     "class-validator": "^0.12.2",
     "date-fns": "^2.16.1",
     "jsonwebtoken": "^8.5.1",
-    "nelso": "0.0.23",
+    "kioto": "0.0.5",
     "reflect-metadata": "^0.1.13",
     "sqlite3": "^5.0.0",
     "typeorm": "^0.2.29"

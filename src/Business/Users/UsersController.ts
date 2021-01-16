@@ -1,5 +1,5 @@
 import { addDays } from "date-fns";
-import { Controller, Get, Post, Request, Response } from "nelso/build";
+import { Controller, Get, Post, Request, Response } from "kioto/build";
 import { AuthMiddleware } from "../Common/Middleware/AuthMiddleware";
 import { LoginDto } from "./Dto/LoginDto";
 import { RegisterDto } from "./Dto/RegisterDto";
@@ -11,14 +11,14 @@ export class UsersController {
 
   @Post("login")
   async login(req: Request, res: Response) {
-    const dto = await req.body(LoginDto);
+    const dto = await req.bodyAs(LoginDto);
     const token = await this.usersService.login(dto);
     res.send({ accessToken: token, expiresAt: addDays(new Date(), 1) });
   }
 
   @Post("register")
   async register(req: Request, res: Response) {
-    const dto = await req.body(RegisterDto);
+    const dto = await req.bodyAs(RegisterDto);
     await this.usersService.register(dto);
     res.send({ message: "Account created successfully!" });
   }

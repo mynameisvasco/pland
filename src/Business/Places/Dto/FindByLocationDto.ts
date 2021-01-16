@@ -1,11 +1,7 @@
-import { IsLatitude, IsLongitude, IsNumber, Max, Min } from "class-validator";
-
+import { IsNotEmpty, IsNumber, Min } from "class-validator";
 export class FindByLocationDto {
-  @IsLatitude()
-  latitude: number;
-
-  @IsLongitude()
-  longitude: number;
+  @IsNotEmpty()
+  coordinates: any;
 
   @IsNumber()
   @Min(10)

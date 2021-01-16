@@ -1,4 +1,4 @@
-import { Injectable, Provider, Di, Types } from "nelso/build";
+import { Injectable, Provider, Di, Types } from "kioto/build";
 import { UsersController } from "./UsersController";
 import { UsersService } from "./UsersService";
 

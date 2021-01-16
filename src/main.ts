@@ -4,9 +4,10 @@ import { DatabaseProvider } from "./Infrastructure/Database/DatabaseProvider";
 import { UsersProvider } from "./Business/Users/UsersProvider";
 import { AuthProvider } from "./Infrastructure/Auth/AuthProvider";
 import { AuthMiddleware } from "./Business/Common/Middleware/AuthMiddleware";
-import { AppFactory, Di, Provider, Middleware } from "nelso/build";
+import { AppFactory, Di, Provider, Middleware } from "kioto/build";
 import { PlacesProvider } from "./Business/Places/PlacesProvider";
 import { LocationProvider } from "./Infrastructure/Location/LocationProvider";
+import { CorsMiddleware } from "./Business/Common/Middleware/CorsMiddleware";
 
 const app = AppFactory.build();
 
@@ -37,6 +38,7 @@ function boot() {
 }
 
 async function start() {
+  app.useGlobalMiddleware([CorsMiddleware]);
   app.start();
 }
 

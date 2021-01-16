@@ -1,4 +1,4 @@
-import { Injectable } from "nelso/build";
+import { Injectable } from "kioto/build";
 import { Coordinates } from "../../Domain/Models/Coordinates";
 import { DatabaseService } from "../../Infrastructure/Database/DatabaseService";
 import { OpenRouteService } from "../../Infrastructure/Location/OpenRouteService";
@@ -6,6 +6,7 @@ import { FindByLocationDto } from "./Dto/FindByLocationDto";
 import { CreateDto } from "./Dto/CreateDto";
 import { Place } from "../../Domain/Entities/Place";
 import { areIntervalsOverlapping } from "date-fns";
+import { Like } from "typeorm";
 
 @Injectable()
 export class PlacesService {
@@ -25,13 +26,17 @@ export class PlacesService {
     return await databaseService.places.findOne(id, { relations });
   }
 
+  async findByNameLike(name: string) {
+    const { databaseService } = this;
+    return await databaseService.places.find({ name: Like(`%${name}%`) });
+  }
+
   async findByLocation(dto: FindByLocationDto, relations: string[] = []) {
     const { databaseService, openRouteService } = this;
     const places = await databaseService.places.find({ relations });
-    const userCoordinates = new Coordinates(dto.latitude, dto.longitude);
     return places.filter(
       (place) =>
-        openRouteService.distanceInKm(place.location, userCoordinates) <=
+        openRouteService.distanceInKm(place.location, dto.coordinates) <=
         dto.radius
     );
   }

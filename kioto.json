@@ -1,0 +1,12 @@
+{
+    "port": 8080,
+    "jwt-secret": "HJCCp.%rUK4P}#CT",
+    "enable-logging-errors": true,
+    "open-route-api-key": "5b3ce3597851110001cf6248c007d6e98f164b34a1e839410fad79c8",
+    "httpOptions": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+        "Access-Control-Allow-Headers":"Content-Type, Authorization, X-Requested-With",
+        "Access-Control-Allow-Credentials": true
+    }
+}

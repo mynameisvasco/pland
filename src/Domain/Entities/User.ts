@@ -1,5 +1,6 @@
 import {
   Column,
+  CreateDateColumn,
   Entity,
   ManyToMany,
   OneToMany,
@@ -18,9 +19,6 @@ export class User {
   @Column("varchar")
   name: string;
 
-  @Column("int")
-  age: number;
-
   @Column("varchar", { unique: true })
   email: string;
 
@@ -38,6 +36,9 @@ export class User {
 
   @Column("int", { default: AccountTypes.CLIENT })
   type: AccountTypes;
+
+  @CreateDateColumn({ type: "datetime", nullable: true })
+  createdAt: Date;
 
   @OneToMany(() => Event, (e) => e.planner)
   plannedEvents: Event[];

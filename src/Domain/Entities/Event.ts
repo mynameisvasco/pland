@@ -30,7 +30,7 @@ export class Event {
   attendanceLimit: number;
 
   @Column("tinyint")
-  needsTicket: boolean;
+  needsTicket: number;
 
   @Column("varchar", { nullable: true })
   description?: string;

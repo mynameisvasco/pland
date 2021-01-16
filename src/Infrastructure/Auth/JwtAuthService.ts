@@ -1,7 +1,7 @@
 import * as Jwt from "jsonwebtoken";
 import * as Crypto from "crypto";
 import { AuthedUser } from "../../Domain/Models/AuthedUser";
-import { Injectable, Config } from "nelso/build";
+import { Injectable, Config } from "kioto/build";
 
 @Injectable()
 export class JwtAuthService {
@@ -9,9 +9,7 @@ export class JwtAuthService {
 
   createToken(authedUser: AuthedUser) {
     const jwtSecret = this.config.get<string>("jwt-secret");
-    return Jwt.sign({ ...authedUser }, jwtSecret, {
-      expiresIn: 21600, //1day,
-    });
+    return Jwt.sign({ ...authedUser }, jwtSecret, {});
   }
 
   verifyTokenOrFail(accessToken: string) {

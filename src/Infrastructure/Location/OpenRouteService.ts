@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Config, Injectable } from "nelso/build";
+import { Config, Injectable } from "kioto/build";
 import { Coordinates } from "../../Domain/Models/Coordinates";
 import { Location } from "../../Domain/Models/Location";
 
